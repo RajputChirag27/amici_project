@@ -1,0 +1,29 @@
+*{
+margin: 0;
+padding: 0;
+box-sizing: border-box; 
+}
+
+body{
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+    display: flex;
+    align-items: flex-start;
+    color: rgb(3, 140, 252);
+    background-color: #fff;
+    justify-content: center;
+    background-image: url("../Images/bg1.jpg");
+    background-size: cover;
+    background-position: center;
+    flex-direction: column;
+    }
+
+.primary-heading{
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

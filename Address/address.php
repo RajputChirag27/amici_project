@@ -16,6 +16,7 @@ include '../connection.inc.php';
 
 
 
+try{
 if (isset($_POST['submit'])) {
 
   // echo $_SESSION['customer_id'];
@@ -52,14 +53,29 @@ if (isset($_POST['submit'])) {
 
   $result = mysqli_query($conn, $query);
 
+
+
   if ($conn->query($query) === TRUE) {
     // echo "New record created successfully";
-    header("Location: ../index.php");
+    $_SESSION['customer_address_id'] = $conn->insert_id;
+    header("Location: ../Index/index.php");
+
   } else {
     // echo "Please go to Login page";
     header("Location: ../Address/address.php");
   }
 }
+}
+catch(Exception $e){
+  if ($e->getCode() == 1062) {
+    // Error code 1062 corresponds to 'Duplicate entry' error
+    echo "<script>alert('Address already exists')</script>";
+} else {
+    // For other errors, display a general error message
+    echo "<script>alert('Error occured')</script>";
+}
+}
+
 $conn->close();
 ?>
 
@@ -84,13 +100,13 @@ $conn->close();
         </div>
         <label class="d-block mb-2">
           <span class="form-label d-block text-light">Address</span>
-          <input name="address1" type="text" class="form-control text-light border-secondary bg-transparent"
+          <input name="address1" type="text" class="form-control text-light border-secondary bg-transparent " required
             placeholder="" />
         </label>
 
         <label class="d-block mb-2">
           <span class="form-label d-block text-light">Street</span>
-          <input name="address2" type="text" class="form-control text-light border-secondary bg-transparent"
+          <input name="address2" type="text" class="form-control text-light border-secondary bg-transparent " required
             placeholder="" />
         </label>
 
@@ -99,7 +115,7 @@ $conn->close();
         <label class="d-block mb-2">
           <span class="form-label d-block text-light">Country</span>
           <select name="country" class="form-select text-light border-secondary bg-transparent" id="country"
-            name="country">
+            name="country" required>
             <option value="default" class="text-dark" selected disabled>Select Country</option>
             <?php
             while ($row = mysqli_fetch_assoc($country_result)): ?>
@@ -111,7 +127,7 @@ $conn->close();
 
         <label class="d-block mb-2">
           <span class="form-label d-block text-light">State</span>
-          <select name="state" class="form-select text-light border-secondary bg-transparent" id="state" name="state">
+          <select name="state" class="form-select text-light border-secondary bg-transparent" id="state" name="state" required>
             <option value="default" class="text-dark" selected disabled>Select State</option>
           </select>
 
@@ -119,7 +135,7 @@ $conn->close();
 
         <label class="d-block mb-4">
           <span class="form-label d-block text-light">City</span>
-          <select name="city" class="form-select text-light border-secondary bg-transparent" id="city">
+          <select name="city" class="form-select text-light border-secondary bg-transparent" id="city" required>
             <option value="India" class="text-dark" selected disabled>Select City</option>
           </select>
 
@@ -127,8 +143,11 @@ $conn->close();
 
 
         <div class="mb-3">
-          <button type="submit" name="submit" class="btn btn-primary px-3 rounded-3">
+          <button type="submit" name="submit" class="btn btn-primary px-3 rounded-3 mx-5">
             Save Address
+          </button>
+          <button class="btn btn-primary px-3  rounded-3">
+          <a href="../Index/index.php" class="text-light list-unstyled ">Skip</a>
           </button>
         </div>
     </div>

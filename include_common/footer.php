@@ -181,8 +181,8 @@
 
   <!-- Copyright -->
   <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-    © 202 Copyright &nbsp;:
-    <a class="text-white" href="../index.php">ticketingsystem.com</a>
+    © 2023 Copyright &nbsp;:
+    <a class="text-white" href="../Index/index.php">ticketingsystem.com</a>
   </div>
   <!-- Copyright -->
 </footer>

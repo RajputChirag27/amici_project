@@ -29,6 +29,10 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
   $_SESSION['email'] = $email;
   $_SESSION['customer_id'] = $result->fetch_assoc()['id'];
+
+  if(isset($_SESSION['address'])){
+    header('Location: ../Index/index.php');
+  } else
     header('Location: ../Address/address.php');
 } else if ($result->num_rows == 0) {
     // Go to Login page

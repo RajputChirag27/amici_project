@@ -1,11 +1,11 @@
 <?php
-include './include_common/header.php';
-include 'connection.inc.php';
+include '../include_common/header.php';
+include '../connection.inc.php';
 ?>
 
 <head>
   <title>Address</title>
-  <link rel="stylesheet" href="./style/style.css" />
+  <link rel="stylesheet" href="../style/style.css" />
 </head>
 
 <div class="container mt-5 mb-5">
@@ -22,36 +22,29 @@ include 'connection.inc.php';
           bg-dark
           border-secondary
         "
-        action="https://herotofu.com/start"
-        enctype="multipart/form-data"
+        action=""
+        method='POST'
       >
         <label class="d-block mb-4">
-          <span class="form-label d-block text-light">Your name</span>
-          <input
-            name="name"
-            type="text"
-            class="form-control text-light border-secondary bg-transparent"
-            placeholder="Joe Bloggs"
-          />
-        </label>
+          <span class="form-label d-block text-light">Address</span>
+          <select class="form-control border-secondary bg-transparent text-light">
+            <option value="default" class="text-light" selected disabled>
+              Select Address
+            </option>
+            <?php
+            $sql = "SELECT * FROM customer_address";
+            $result = mysqli_query($conn, $sql);
+            // while ($row = mysqli_fetch_assoc($result)) {
+            //   echo "<option value='" . $row['id'] . "' class='text-light'> " . $row['address1'] . "</option>";
+            // }
+            ?>
 
-        <label class="d-block mb-4">
-          <span class="form-label d-block text-light">Email address</span>
-          <input
-            name="email"
-            type="email"
-            class="form-control border-secondary bg-transparent text-light"
-            placeholder="joe.bloggs@example.com"
-          />
-        </label>
+<?php
+            while ($row = mysqli_fetch_assoc($result)): ?>
+              <option class="text-dark" value="<?php echo $row['id']; ?>"> <?php echo $row['address'].",".$row['street'].",".$row['city'].",".$row['state'].",".$row['country']; ?> </option>
+            <?php endwhile; ?>
 
-        <label class="d-block mb-4">
-          <span class="form-label d-block text-light">Receipt</span>
-          <input
-            name="receipt"
-            type="file"
-            class="form-control border-secondary bg-transparent text-secondary"
-          />
+          </select>
         </label>
 
         <label class="d-block mb-4">
@@ -67,7 +60,7 @@ include 'connection.inc.php';
           >
           <textarea
             name="message"
-            class="form-control border-secondary bg-transparent text-light"
+            class="form-control border-secondary bg-light text-dark"
             rows="3"
             placeholder="Please describe your problem"
           ></textarea>
@@ -83,7 +76,7 @@ include 'connection.inc.php';
           <div class="small text-white-50">
             by
             <a
-              href="https://herotofu.com"
+              href="#"
               class="text-decoration-none text-white-50"
               target="_blank"
               >Ticketing System</a
@@ -96,5 +89,5 @@ include 'connection.inc.php';
 </div>
 
 <?php
-include './include_common/footer.php';
+include '../include_common/footer.php';
 ?>
