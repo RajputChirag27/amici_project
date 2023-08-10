@@ -3,9 +3,6 @@ include '../connection.inc.php';
 include '../include_common/header.php';
 
   // Check connection
-  if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-  }
   
   if(isset($_POST['submit'])){
   $name = $_POST['username'];
@@ -18,6 +15,7 @@ include '../include_common/header.php';
   
   if ($conn->query($sql) === TRUE) {
     // echo "New record created successfully";
+    $_SESSION['customer_id'] = $conn->insert_id;
     header("Location: ../Login/login.php");
   } else {
     // echo "Please go to Login page";
@@ -76,7 +74,7 @@ include '../include_common/header.php';
             />
           </div>
         </div>
-        <button class="submit">Sign Up</button>
+        <button class="submit" name="submit">Sign Up</button>
       </form>
       <div class="link">
         <a href="#">Already a User?</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="../Login/login.php">Login</a>

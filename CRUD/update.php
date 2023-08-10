@@ -4,7 +4,7 @@ include '../connection.inc.php';
 ?>
 
 <head>
-  <title>Address</title>
+  <title>Update</title>
   <link rel="stylesheet" href="../style/style.css" />
   <?php
   ob_start();
@@ -28,30 +28,6 @@ include '../connection.inc.php';
         action=""
         method='POST'
       >
-        <label class="d-block mb-4">
-          <span class="form-label d-block text-light">Address</span>
-          <select class="form-control border-secondary bg-transparent text-light" name="customer_add_id">
-            <option value="default" class="text-light" selected disabled>
-              Select Address
-            </option>
-            <?php
-            $sql = "SELECT * FROM customer_address where customer_id = {$_SESSION['customer_id']}";
-            $result = mysqli_query($conn, $sql);
-            ?>
-
-<?php
-            while ($row = mysqli_fetch_assoc($result)): ?>
-           
-              <option class="text-dark" value="<?php echo $row['id']; ?>"> <?php echo $row['address'].",".$row['street'].",".$row['city'].",".$row['state'].",".$row['country']; 
-              ?> </option>
-              <?php 
-              $_SESSION['$customer_address_idd'] = $row['id'];
-              ?>
-            <?php endwhile; 
-            ?>
-
-          </select>
-        </label>
 
         <label class="d-block mb-4">
           <span
@@ -62,7 +38,7 @@ include '../connection.inc.php';
               border-secondary
               bg-transparent
             "
-            >What's wrong?</span
+            >Update your issue</span
           >
           <textarea
             name="message"
@@ -97,18 +73,23 @@ include '../connection.inc.php';
 <div>
 <?php
 
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $id = $_GET['id'];
+} else {
+    echo "Error.";
+    exit();
+}
+
 if(isset($_POST['submit'])){
 
 $complaint = $_POST['message'];
-$customer_id = $_SESSION['customer_id'];
-$customer_address_id = (int) $_POST['customer_add_id'];
+$customer_id = $_SESSION['dashboard_id'];
+echo $complaint;
 
+// update date and complaint in customer_complaint table by row id
 
-// echo $customer_id;
-// echo $customer_address_id;
-// echo $complaint;
+$sql = "UPDATE customer_complaint SET update_date = NOW(), complaint = '$complaint' WHERE id = '$id'";
 
-  $sql = "INSERT INTO customer_complaint (customer_id,customer_address_id,create_date, update_date, complaint) VALUES ('$customer_id','$customer_address_id',now(),now(),'$complaint')";
   $result = mysqli_query($conn, $sql);
   if($sql){
     echo "Data Inserted";
@@ -126,3 +107,6 @@ $customer_address_id = (int) $_POST['customer_add_id'];
 <?php
 include '../include_common/footer.php';
 ?>
+
+// Update.php
+

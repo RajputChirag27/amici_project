@@ -10,7 +10,7 @@ include '../include_common/header.php';
 
 
 <div class="primary-heading">
-    <h1 class="primary-heading mt-5">
+    <h1 class="primary-heading mt-5 text-light">
         Ticketing System
     </h1>
 
@@ -20,13 +20,9 @@ include '../include_common/header.php';
 
 </div>
 
-
-
-
 <table class="table table-dark table-hover w-100">
     <thead>
-        <tr>
-
+        <tr >
             <th>
                 Address
             </th>
@@ -44,6 +40,25 @@ include '../include_common/header.php';
             </th>
 
         </tr>
+
+        <?php
+        echo "<br>";
+        $sql = "SELECT * FROM customer_complaint where customer_id = {$_SESSION['customer_id']} ";
+        $result = mysqli_query($conn, $sql);
+        $dashboard_id = mysqli_fetch_assoc($result);
+        while ($row = mysqli_fetch_assoc($result)) {
+            echo "<tr>";
+            echo "<td>" . $row['customer_address_id'] . "</td>";
+            echo "<td>" . $row['create_date'] . "</td>";
+            echo "<td>" . $row['complaint'] . "</td>";
+            echo "<td>" . "<a href='../CRUD/update.php?id=" . $row['id'] . "' class='btn btn-primary'>Update</a>" . "</td>";
+            echo "<td>" . "<a href='../CRUD/delete.php?id=" . $row['id'] . "' class='btn btn-danger'>Delete</a>" . "</td>";
+            echo "</tr>";
+            
+        }
+        // set pagination
+        ?>
+
     </thead>
 
 

@@ -25,7 +25,6 @@ if(isset($_POST['submit'])){
 $sql = "SELECT * FROM `amici`.`customer` WHERE `email` = '$email' AND `password` = '$pass'";
 
 $result = $conn->query($sql);
-
 if ($result->num_rows > 0) {
   $_SESSION['email'] = $email;
   $_SESSION['customer_id'] = $result->fetch_assoc()['id'];
